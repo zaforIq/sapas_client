@@ -1,24 +1,29 @@
 // return a function to make a request to the server for sign up
 
-const baseUrl=process.env.apiBaseUrl;
-export const signUp = (data) => {
-    return fetch(`${baseUrl}/api/student/signup`, {
+const baseUrl=process.env.NEXT_PUBLIC_BACKEND_BASE_API
+export const  signUp =  async (data) => {
+    const res = await fetch(`${baseUrl}/student/signup`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
     })
-    }
+    const res_1 = await res.json()
+    return res_1
+}
 
-export const signIn = (data) => {
-    return fetch(`${baseUrl}/api/student/signin`, {
+export const  logIn =  async (data) => {
+    console.log(data)
+    const res = await fetch(`${baseUrl}/student/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
     })
+    const res_1 = await res.json()
+    return res_1
 }
 
 export const getStudent = (data) => {

@@ -11,7 +11,7 @@ const Header = () => {
 
 
   return (
-    <div className='flex justify-between mt-8 mb-4'>
+    <div className='flex justify-between mt-8 mb-8'>
       <h1 className='font-bold text-2xl'>{pathname}</h1>
 
     <div className='flex'>

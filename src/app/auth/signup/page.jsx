@@ -1,18 +1,41 @@
 "use client";
 
 import React, { useState } from 'react';
+import { ScrollArea } from '@radix-ui/react-scroll-area';
+import { jwtDecode } from 'jwt-decode';
+
+import { signUp } from '@/lib/apiStudent';
+
 
 const SignupPage = () => {
   const [user, setUser] = useState({ studentId:'', name: '',department:'', email: '', password: '' });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle sign-up logic here
-    console.log('User signed up:', user);
+    signUp(user)
+      .then((res) => {
+        if (res.error) {
+          alert(res.error);
+        } else {
+          const { token, student } = res;
+          localStorage.setItem('student', JSON.stringify(student));
+          localStorage.setItem('token', token);
+          const decoded = jwtDecode(token);
+          console.log("Hello decode",decoded);
+          alert('Sign up successful');
+          window.location.href = '/';
+          
+        }
+      })
+      .catch((err) => {
+        alert('Sign up failed');
+      });
+    
   };
 
 
   return (
+    <ScrollArea className="h-full">
     <div className="flex justify-center mt-20">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
         <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
@@ -89,16 +112,20 @@ const SignupPage = () => {
             >
               Sign Up
             </button>
+           <div className=" text-center">
+            <span className="text-sm text-gray-600">Already have an account? </span>
             <a
-              className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+              className="font-bold text-sm text-blue-500 hover:text-blue-800"
               href="/auth/login"
             >
-              Already have an account? Login
+              Log In
             </a>
+          </div>
           </div>
         </form>
       </div>
     </div>
+    </ScrollArea>
   );
 };
 

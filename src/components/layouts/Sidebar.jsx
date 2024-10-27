@@ -18,6 +18,13 @@ const Sidebar = () => {
     { name: 'Settings', path: '/settings', icon: <Settings02Icon /> },
   ];
 
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('student');
+    window.location.href = '/';
+  }
+
   return (
     <div className='hidden md:flex flex-col h-full'>
       <div>
@@ -42,7 +49,7 @@ const Sidebar = () => {
       </div>
       <div className='flex  mt-96'>
         <Logout01Icon />
-        <button className='ml-2 mt-auto'>Logout</button>
+        <button onClick={handleLogout} className='ml-2 mt-auto'>Logout</button>
       </div>
     </div>
   );

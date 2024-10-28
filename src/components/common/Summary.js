@@ -9,7 +9,7 @@ const Summary = (props) => {
       <div className='col-span-4 md:col-span-3'>
         <div className='bg-gradient-to-r from-[#1a69b9] to-[#17918e] rounded-xl text-white p-4 flex items-center'>
           <div className='w-1/3 flex justify-center'>
-            <CircularProgressBar percentage={80} />
+            <CircularProgressBar percentage={80} fill1="#ffffff" fill2="#000000" />
           </div>
           <div className='w-2/3'>
             <h1 className='text-2xl'>Overall Goal Completion</h1>
@@ -47,13 +47,62 @@ const Summary = (props) => {
       </div>
       <div className='col-span-4 md:col-span-1 bg-gray-300 p-4 rounded-lg'>
        <p>Priority List</p>
-       <p className='text-sm'>Based on your target goal and your current situation, the subjects that warrant your attention are</p>
+       <p className='text-sm mt-2'>Based on your target goal and your current situation, the subjects that warrant your attention are</p>
        {props.summaryData.map((data, index) => (
             <div key={index} className=' mt-2 p-2 rounded-lg flex items-center'>
               <p className='border p-2 rounded-full bg-white w-8 h-8 flex items-center justify-center'>0</p>
               <p className='ml-4'>{data.courseName}</p>
             </div>
           ))}
+                    <div className="relative h-[257px] w-full max-w-full overflow-hidden">
+            <div className="absolute inset-0 bg-white rounded-lg" />
+            <div className="absolute left-2 top-2 flex flex-col space-y-2">
+  <div className="text-[#5d6871] text-sm font-normal font-['Lato'] tracking-tight">A+</div>
+  <div className="text-[#5d6871] text-sm font-normal font-['Lato'] tracking-tight">A</div>
+  <div className="text-[#5d6871] text-sm font-normal font-['Lato'] tracking-tight">A-</div>
+  <div className="text-[#5d6871] text-sm font-normal font-['Lato'] tracking-tight">B+</div>
+  <div className="text-[#5d6871] text-sm font-normal font-['Lato'] tracking-tight">B</div>
+  <div className="text-[#5d6871] text-sm font-normal font-['Lato'] tracking-tight">B-</div>
+  <div className="text-[#5d6871] text-sm font-normal font-['Lato'] tracking-tight">C+</div>
+  <div className="text-[#5d6871] text-sm font-normal font-['Lato'] tracking-tight">C</div>
+  <div className="text-[#5d6871] text-sm font-normal font-['Lato'] tracking-tight">D</div>
+</div>
+<div className="absolute left-10 bottom-2 flex space-x-2 items-end">
+  <div className="flex flex-col items-center">
+    <div className="w-4 h-[215px] bg-gradient-to-b from-[#17918e] via-[#196cb5] to-[#1a69b9] rounded-tl rounded-tr" />
+    <div className="text-sm mt-1">Os</div>
+  </div>
+  <div className="flex flex-col items-center">
+    <div className="w-4 h-[167px] bg-[#61a1c2] rounded-tl rounded-tr" />
+    <div className="text-sm mt-1">dm</div>
+  </div>
+  <div className="flex flex-col items-center">
+    <div className="w-4 h-[191px] bg-[#61a1c2] rounded-tl rounded-tr" />
+    <div className="text-sm mt-1">ds</div>
+  </div>
+  <div className="flex flex-col items-center">
+    <div className="w-4 h-[191px] bg-[#61a1c2] rounded-tl rounded-tr" />
+    <div className="text-sm mt-1">algo</div>
+  </div>
+  <div className="flex flex-col items-center">
+    <div className="w-4 h-[215px] bg-gradient-to-b from-[#17918e] via-[#196cb5] to-[#1a69b9] rounded-tl rounded-tr" />
+    <div className="text-sm mt-1">ph</div>
+  </div>
+  <div className="flex flex-col items-center">
+    <div className="w-4 h-[143px] bg-[#61a1c2] rounded-tl rounded-tr" />
+    <div className="text-sm mt-1">jh</div>
+  </div>
+  <div className="flex flex-col items-center">
+    <div className="w-4 h-[215px] bg-gradient-to-b from-[#17918e] via-[#196cb5] to-[#1a69b9] rounded-tl rounded-tr" />
+    <div className="text-sm mt-1">cc</div>
+  </div>
+  <div className="flex flex-col items-center">
+    <div className="w-4 h-[215px] bg-gradient-to-b from-[#17918e] via-[#196cb5] to-[#1a69b9] rounded-tl rounded-tr" />
+    <div className="text-sm mt-1">ff</div>
+  </div>
+</div>
+  
+          </div>
       </div>
     </div>
   );

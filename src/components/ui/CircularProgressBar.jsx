@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CircularProgressBar = ({ percentage }) => {
+const CircularProgressBar = ({ percentage,fill1,fill2 }) => {
   const radius = 50;
   const stroke = 10;
   const normalizedRadius = radius - stroke * 2;
@@ -14,7 +14,7 @@ const CircularProgressBar = ({ percentage }) => {
       className="circular-progress-bar"
     >
       <circle
-        stroke="#65a7eb"
+        stroke={fill1}
         fill="transparent"
         strokeWidth={stroke}
         r={normalizedRadius}
@@ -22,7 +22,7 @@ const CircularProgressBar = ({ percentage }) => {
         cy={radius}
       />
       <circle
-        stroke="#FFFFFF"
+        stroke={fill2}
         fill="transparent"
         strokeWidth={stroke}
         strokeDasharray={circumference + ' ' + circumference}
@@ -37,7 +37,7 @@ const CircularProgressBar = ({ percentage }) => {
         dy=".3em"
         textAnchor="middle"
         className="text-xl font-bold"
-        fill="#FFFFFF"
+        fill={fill2}
       >
         {percentage}%
       </text>

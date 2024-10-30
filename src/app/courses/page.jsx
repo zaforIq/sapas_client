@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { Delete01Icon,Edit01Icon,File01Icon } from 'hugeicons-react';
 import AssesmentModal from '@/components/common/AssesmentModal';
 import AddSectionModal from '@/components/common/AddSectionModal';
+import Button from '@/components/ui/button';
+import AddCourse from '@/components/common/AddCourse';
 
 const Courses = () => {
   const [summaryData, setSummaryData] = useState([]);
@@ -60,6 +62,9 @@ const Courses = () => {
   const closeAddSectionModalHandler = () => {
     setOpenAddSectionModal(false);
   }
+
+  const [addCourseModalIsOpen , setAddCourseModalIsOpen] = useState(false)
+
   return (
     <div className='flex flex-col'>
       {openModal && selectedCourse && (
@@ -72,8 +77,10 @@ const Courses = () => {
           
         />
       )}
+
+    {addCourseModalIsOpen && <AddCourse closeModal={() => setAddCourseModalIsOpen(false)} />}
       {openAddSectionModal && <AddSectionModal closeAddSectionModalHandler={closeAddSectionModalHandler}/>}
-      <div>
+      <div className=''>
         {summaryData && summaryData.length > 0 ? (
           summaryData.map((data, index) => (
             <button
@@ -98,6 +105,9 @@ const Courses = () => {
         ) : (
           <p>Loading...</p>
         )}
+      </div>
+      <div className=' flex mt-4 justify-center'>
+        <Button InnerText="Add Course" btnOnclick={()=>setAddCourseModalIsOpen(true)}/>
       </div>
     </div>
   );

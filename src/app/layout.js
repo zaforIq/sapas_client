@@ -11,9 +11,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="h-screen grid grid-cols-1 md:grid-cols-5 gap-4 p-8">
-        <Sidebar className="col-span-1 md:col-span-1 h-full"/>
-        <div className="col-span-4 md:col-span-4 flex flex-col h-full">
+      <body className="h-screen grid grid-cols-6  gap-4 p-8">
+        <Sidebar className="md:col-span-1 h-full"/>
+        <div className="col-span-6 md:col-span-5 flex flex-col h-full">
           <Header className="flex-none"/>
           <main className="flex-grow overflow-auto">
             {children}

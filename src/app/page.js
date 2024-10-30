@@ -54,7 +54,7 @@ export default function Home() {
   }, []);
 
     useEffect(() => {
-    if (summaryData) {
+    if (userToken && summaryData) {
       setSummaryView(true);
     }
   }, [summaryData]);

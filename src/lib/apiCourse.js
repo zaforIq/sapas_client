@@ -31,6 +31,22 @@ export const CreateCourse = async (data) => {
                 'Authorization': `Bearer ${userToken}`
             }
         });
-    
         return response.json();
     }
+
+
+
+export const updateCourse = async (id, targetScore) => {
+  console.log('id', id);
+  console.log('targetScore', targetScore);
+  const userToken = token();
+  const response = await fetch(`${baseUrl}/course/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userToken}`
+    },
+    body: JSON.stringify({ targetScore }) // Ensure targetScore is sent as a JSON object
+  });
+  return response.json();
+};

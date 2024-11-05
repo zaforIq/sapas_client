@@ -15,6 +15,7 @@ const Sidebar = () => {
     { name: 'Performance Analysis', path: '/performance', icon: <Analytics01Icon /> },
     { name: 'Study Plan', path: '/study-plan', icon: <Book01Icon /> },
     { name: 'Progress Tracking', path: '/progress', icon: <DiscoverCircleIcon /> },
+    {name:'Community Zone',path:'/community',icon:<DiscoverCircleIcon/>},
     { name: 'Settings', path: '/settings', icon: <Settings02Icon /> },
   ];
 

@@ -9,6 +9,8 @@ import AddCourse from '@/components/common/AddCourse';
 import { GetCourses } from '@/lib/apiCourse';
 import { createAssesment, getAssesment } from '@/lib/apiAssesments';
 import { createMark } from '@/lib/apiMark';
+import { getAssesmentDetailsWithAchievedMark } from '@/lib/apiJoin';
+import { AssesmentProvider } from '@/contexts/assesmentContext';
 
 const Courses = () => {
   const [summaryData, setSummaryData] = useState([]);
@@ -21,20 +23,23 @@ const [presentCourse,setPresentCourse]=useState('')
   useEffect(() => {
   GetCourses()
     .then((data) => {
-      console.log(data)
+  
       setSummaryData(data);
     })
   }, []);
 
-  useEffect(() => {
+
+
+    useEffect(() => {
     if (selectedCourse) {
-      getAssesment(selectedCourse.courseId)
+      getAssesmentDetailsWithAchievedMark(selectedCourse.courseId)
         .then((data) => {
-          console.log("ek number",data);
+          console.log("dui number",data);
           setAssessments(data);
         });
     }
   }, [selectedCourse]);
+  
   
   
 
@@ -65,13 +70,18 @@ const [presentCourse,setPresentCourse]=useState('')
 
 
   const handleAddSection = (assesment) => {
+
+    let achievedMark = 0;
+    if(assesment.achievedMark){
+      achievedMark = assesment.achievedMark;
+    }
     createAssesment(selectedCourse.courseId, assesment)
       .then((res) => {
-        createMark(res.courseId,res.assesmentId,assesment.achievedMark)
+        createMark(res.assesmentId,achievedMark)
         .then((res) => {
           console.log(res)
         })
-        getAssesment(selectedCourse.courseId)
+        getAssesmentDetailsWithAchievedMark(selectedCourse.courseId)
           .then((data) => {
             setAssessments(data);
           });
@@ -82,6 +92,7 @@ const [presentCourse,setPresentCourse]=useState('')
   }
 
   return (
+<AssesmentProvider>
     <div className='flex flex-col'>
       {openModal && selectedCourse && (
         <AssesmentModal
@@ -130,6 +141,7 @@ const [presentCourse,setPresentCourse]=useState('')
         <Button InnerText="Add Course" btnOnclick={()=>setAddCourseModalIsOpen(true)}/>
       </div>
     </div>
+</AssesmentProvider>
   );
 };
 

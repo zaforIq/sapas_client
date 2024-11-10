@@ -1,10 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
 
+
 const AddSectionModal = ({  closeAddSectionModalHandler,currentCourse,handleAddSection }) => {
-  console.log('currentCourse',currentCourse)
-  const [assesment , setAssesment]=useState({})
-  const [obtainMark , setObtainMark]=useState('')
+const [assesment , setAssesment]=useState({})
+
+
 
 
   return (
@@ -39,7 +40,7 @@ const AddSectionModal = ({  closeAddSectionModalHandler,currentCourse,handleAddS
           />
           </div>
 
-                           <div className="mb-4">
+          <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="achievedMark">
             Achieved Mark
           </label>
@@ -57,7 +58,6 @@ const AddSectionModal = ({  closeAddSectionModalHandler,currentCourse,handleAddS
             <button onClick={()=>{
               handleAddSection(assesment)
             }} className='bg-blue-500 text-white px-4 py-2 rounded-lg w-full'>Add</button>
-          
           </div>
         </div>
       </div>

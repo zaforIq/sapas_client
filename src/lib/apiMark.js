@@ -2,20 +2,17 @@ import { token } from "./localStorageHandler";
 
 const baseUrl = process.env.NEXT_PUBLIC_BACKEND_BASE_API;
 
-export const createMark = async (courseId, assesmentId, markObtained) => {
-    console.log("eito", courseId, assesmentId, markObtained);
+export const createMark = async (assesmentId, markObtained) => {
+    console.log("eito", assesmentId, markObtained);
     const userToken = token();
 
-    console.log(userToken);
     const response = await fetch(`${baseUrl}/mark`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${userToken}`,
-            'courseId': courseId,
-            'assesmentId': assesmentId
+            'Authorization': `Bearer ${userToken}`
         },
-        body: JSON.stringify({ markObtained })
+        body: JSON.stringify({ assesmentId, markObtained })
     });
     return response.json();
 };

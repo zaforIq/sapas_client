@@ -3,9 +3,22 @@ import { PencilEdit01Icon,Delete01Icon } from 'hugeicons-react';
 import { GetCourses, updateCourse } from '@/lib/apiCourse';
 
 
+
+
 const AssesmentModal = ({selectedCourse, onClose,openAddSectionModalHandler,setSummaryData,assessments }) => {
   const [targetScore,setTargetScore]=useState('')
   const [targetScoreModalIsOpen,settargetScoreModalIsopen]=useState(false)
+
+
+
+  const handleAssesMentEditWithMark=(assesmentId)=>{
+  //  openAddSectionModalHandler(selectedCourse,assesmentId)
+    
+  }
+  const handleAssesmentDelete=(assesmentId)=>{
+    
+  }
+
 
 
 
@@ -44,12 +57,12 @@ GetCourses().then((data) => {
           {assessments.map((assessment, index) => (
             <div key={index} className="grid grid-cols-6 mb-2 border-b py-2">
               <p className='col-span-3'>{assessment.assesmentName}</p>
-               <p className='col-span-1 text-end'>10</p>
-                <p className='col-span-1 text-end'>{assessment.totalMark}</p>
+               <p className='col-span-1 text-end'>{assessment.achievedMark}</p>
+                <p className='col-span-1 text-end'>{assessment.highestMark}</p>
                
                 <div className='col-span-1 flex justify-end'>
-                    <PencilEdit01Icon className='mr-1' />|
-                    <Delete01Icon className='ml-1' />
+                    <PencilEdit01Icon onClick={()=>{handleAssesMentEditWithMark(assessment.assesmentId)}} className='mr-1' />|
+                    <Delete01Icon onClick={()=>{handleAssesmentDelete(assessment.assesmentId)}} className='ml-1' />
                 </div>
             </div>
           ))}

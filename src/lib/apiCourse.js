@@ -50,3 +50,16 @@ export const updateCourse = async (id, targetScore) => {
   });
   return response.json();
 };
+
+
+export const getCourseById = async (id) => {
+  const userToken = token();
+  const response = await fetch(`${baseUrl}/course/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userToken}`
+    }
+  });
+  return response.json();
+}

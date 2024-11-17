@@ -4,20 +4,12 @@ import { getAssesmentDetailsWithAchievedMark } from '@/lib/apiJoin'; // Ensure t
 const assesmentContext = createContext();
 
 export const AssesmentProvider = ({ children }) => {
-    const [assessment, setAssessment] = useState(null);
+    const [assesmentId, setAssesmentId] = useState(null);
+    const [assesmentWithMark, setAssesmentWithMark] = useState(null);
 
-    const fetchAssessmentData = async (assessmentId) => {
-        try {
-            const data = await getAssesmentDetailsWithAchievedMark(assessmentId);
-            console.log('Assessment Data:', data);
-            setAssessment(data);
-        } catch (error) {
-            console.error('Error fetching assessment data:', error);
-        }
-    };
 
     return (
-        <assesmentContext.Provider value={{ assessment, fetchAssessmentData }}>
+        <assesmentContext.Provider value={{ assesmentId,setAssesmentId,assesmentWithMark,setAssesmentWithMark}}>
             {children}
         </assesmentContext.Provider>
     );

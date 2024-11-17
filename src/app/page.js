@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { token, student } from '@/lib/localStorageHandler';
 import AddCourse from '@/components/common/AddCourse';
 import Summary from '@/components/common/Summary';
+import { getSummaryOfAllCouresOfAStudent } from '@/lib/apiJoin';
 
 
 
@@ -19,39 +20,12 @@ export default function Home() {
   const [summaryData, setSummaryData] = useState(null);
 
   useEffect(() => {
-    setUserToken(token());
-    setUserData(student());
+    const fetchedToken = token();
+    const fetchedUserData = student();
+    setUserToken(fetchedToken);
+    setUserData(fetchedUserData);
   }, []);
 
-  useEffect(() => {
-    const data = [
-      {
-        courseName: "CSE",
-        currentScore: 40,
-        targetScore: 80,
-        getMarks: 40,
-      },
-      {
-        courseName: "EEE",
-        currentScore: 40,
-        targetScore: 80,
-        getMarks: 40,
-      },
-            {
-        courseName: "CSE",
-        currentScore: 40,
-        targetScore: 80,
-        getMarks: 40,
-      },
-      {
-        courseName: "EEE",
-        currentScore: 40,
-        targetScore: 80,
-        getMarks: 40,
-      },
-    ];
-    setSummaryData(data);
-  }, []);
 
     useEffect(() => {
     if (userToken && summaryData) {
@@ -67,9 +41,17 @@ export default function Home() {
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => {
-    console.log('Close modal');
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    if (userToken) {
+      getSummaryOfAllCouresOfAStudent(userData.studentId).then(data => {
+        
+        setSummaryData(data);
+      });
+    }
+  }, [userToken, userData]);
 
 
 
@@ -77,8 +59,6 @@ export default function Home() {
   return (
     <ScrollArea className="h-full">
 {summaryView?<Summary summaryData={summaryData}/>:
-
-      
       <div className="flex flex-col items-center justify-center h-full">
         {isOpen && <AddCourse closeModal={closeModal} />}
         <Image src={hero} alt="Hero" width={400} height={200} />

@@ -11,6 +11,7 @@ import { createAssesment, getAssesment } from '@/lib/apiAssesments';
 import { createMark } from '@/lib/apiMark';
 import { getAssesmentDetailsWithAchievedMark } from '@/lib/apiJoin';
 import { AssesmentProvider } from '@/contexts/assesmentContext';
+import { updateMark } from '@/lib/apiMark';
 
 const Courses = () => {
   const [summaryData, setSummaryData] = useState([]);
@@ -23,7 +24,6 @@ const [presentCourse,setPresentCourse]=useState('')
   useEffect(() => {
   GetCourses()
     .then((data) => {
-  
       setSummaryData(data);
     })
   }, []);
@@ -55,8 +55,6 @@ const [presentCourse,setPresentCourse]=useState('')
   };
 
   const openAddSectionModalHandler = (currentCourse) => {
-    console.log("ami current",currentCourse);
-    // setCurrentCourse(currentCourse);
     setPresentCourse(currentCourse)
     setOpenModal(false);
     setOpenAddSectionModal(true);
@@ -69,9 +67,28 @@ const [presentCourse,setPresentCourse]=useState('')
   const [addCourseModalIsOpen , setAddCourseModalIsOpen] = useState(false)
 
 
-  const handleAddSection = (assesment) => {
+  const handleAddSection = (assesment,assesmentId) => {
+   
 
-    let achievedMark = 0;
+if(assesmentId){
+      let achievedMark = null;
+    if(assesment.achievedMark){
+      achievedMark = assesment.achievedMark;
+    }
+        updateMark(assesmentId,achievedMark)
+        .then((res) => {
+          getAssesmentDetailsWithAchievedMark(selectedCourse.courseId)
+          .then((data) => {
+            setAssessments(data);
+          });
+        })
+      closeAddSectionModalHandler();
+  
+
+}
+else{
+
+      let achievedMark = null;
     if(assesment.achievedMark){
       achievedMark = assesment.achievedMark;
     }
@@ -89,6 +106,7 @@ const [presentCourse,setPresentCourse]=useState('')
     
 
       closeAddSectionModalHandler();
+}
   }
 
   return (

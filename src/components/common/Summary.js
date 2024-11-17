@@ -3,7 +3,8 @@ import CircularProgressBar from '../ui/CircularProgressBar';
 import { File01Icon } from 'hugeicons-react';
 
 const Summary = (props) => {
-  console.log('props', props);
+  console.log(props.summaryData);
+
   return (
     <div className='grid grid-cols-4 gap-4'>
       <div className='col-span-4 md:col-span-3'>
@@ -40,7 +41,7 @@ const Summary = (props) => {
               </div>
               <p>{data.currentScore}</p>
               <p>{data.targetScore}</p>
-              <p>{data.getMarks}</p>
+              <p>{data.targetScore-data.achievedMark}</p>
             </div>
           ))}
         </div>
@@ -50,11 +51,11 @@ const Summary = (props) => {
        <p className='text-sm mt-2'>Based on your target goal and your current situation, the subjects that warrant your attention are</p>
        {props.summaryData.map((data, index) => (
             <div key={index} className=' mt-2 p-2 rounded-lg flex items-center'>
-              <p className='border p-2 rounded-full bg-white w-8 h-8 flex items-center justify-center'>0</p>
+              <p className='border p-2 rounded-full bg-white w-8 h-8 flex items-center justify-center'>{index}</p>
               <p className='ml-4'>{data.courseName}</p>
             </div>
           ))}
-                    <div className="relative h-[257px] w-full max-w-full overflow-hidden">
+           <div className="relative h-[257px] w-full max-w-full overflow-hidden">
             <div className="absolute inset-0 bg-white rounded-lg" />
             <div className="absolute left-2 top-2 flex flex-col space-y-2">
   <div className="text-[#5d6871] text-sm font-normal font-['Lato'] tracking-tight">A+</div>

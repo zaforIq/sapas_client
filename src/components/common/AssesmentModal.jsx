@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { PencilEdit01Icon,Delete01Icon } from 'hugeicons-react';
 import { GetCourses, updateCourse } from '@/lib/apiCourse';
+import assesmentContext from '@/contexts/assesmentContext';
+import { getCourseById } from '@/lib/apiCourse';
 
 
 
@@ -9,10 +11,13 @@ const AssesmentModal = ({selectedCourse, onClose,openAddSectionModalHandler,setS
   const [targetScore,setTargetScore]=useState('')
   const [targetScoreModalIsOpen,settargetScoreModalIsopen]=useState(false)
 
+  const {assesmentId,setAssesmentId}=useContext(assesmentContext)
+
 
 
   const handleAssesMentEditWithMark=(assesmentId)=>{
-  //  openAddSectionModalHandler(selectedCourse,assesmentId)
+    setAssesmentId(assesmentId)
+   openAddSectionModalHandler(selectedCourse,assesmentId)
     
   }
   const handleAssesmentDelete=(assesmentId)=>{
@@ -22,13 +27,24 @@ const AssesmentModal = ({selectedCourse, onClose,openAddSectionModalHandler,setS
 
 
 
+
+  useEffect(() => {
+    getCourseById(selectedCourse.courseId)
+    .then((data)=>{
+      setTargetScore(data.targetScore)
+    }
+    )
+  }, [selectedCourse]);
 const handleSetTargetScore=()=>{
 updateCourse(selectedCourse.courseId,targetScore)
+.then((res)=>
+{
+  getCourseById(selectedCourse.courseId)
+  .then((data)=>{
+    setTargetScore(data.targetScore)
+  })
+})
 
-.then((res)=>console.log(res))
-GetCourses().then((data) => {
-  setSummaryData(data);
-} )
   settargetScoreModalIsopen(false)
 }
   return (
@@ -38,7 +54,7 @@ GetCourses().then((data) => {
        <div className='flex justify-between'>
          <h2 className="text-xl font-bold mb-4">{selectedCourse.courseName}</h2>
          <div className='flex gap-1 relative'>
-          <h1>Target Score: {selectedCourse.targetScore}</h1>
+          <h1>Target Score: {targetScore}</h1>
           <PencilEdit01Icon onClick={()=>settargetScoreModalIsopen(true)}/>
 {targetScoreModalIsOpen &&             <div className='absolute h-36 w-36 bg-red-300 rounded shadow p-2'>
               <h1>Edit Target: </h1>

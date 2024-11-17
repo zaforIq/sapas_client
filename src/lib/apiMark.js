@@ -31,3 +31,16 @@ export const getMarkByAssesmentId = async (assesmentId) => {
     return response.json();
 }
 
+export const updateMark = async (assesmentId, markObtained) => {
+    const userToken = token();
+    const response = await fetch(`${baseUrl}/mark/${assesmentId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userToken}`
+        },
+        body: JSON.stringify({ markObtained })
+    });
+    return response.json();
+}
+

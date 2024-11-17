@@ -1,12 +1,63 @@
 "use client";
 
 import { ScrollArea } from '@radix-ui/react-scroll-area'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { PencilEdit01Icon,NextIcon,Backpack01Icon,Menu01Icon,Navigation01Icon,Doc01Icon } from 'hugeicons-react'
 import { useState } from 'react'
+import { GetCourses } from '@/lib/apiCourse';
+import { getAssesmentDetailsWithAchievedMark,getSummaryOfAParticularCourse,getparticularCourseDetailsAssesmentAchievedMarkIsNotNull,getAssesmentDetailsWithRequiredMark } from '@/lib/apiJoin';
 
 const page = () => {
-  const [courses, setCourses] = useState([{courseName: 'CSE'}, {courseName: 'EEE'}, {courseName: 'CSE'}, {courseName: 'EEE'}])
+  const [courses, setCourses] = useState([])
+  const [assesments, setAssesments] = useState([])
+  const [selectedCourse, setSelectedCourse] = useState(null)
+  const [selectedCourseInfo, setSelectedCourseInfo] = useState(null)
+  const [completedAssesments, setCompletedAssesments] = useState([])
+  const [leftAssesments, setLeftAssesments] = useState([])
+
+  useEffect(() => {
+    GetCourses().then(data => {
+      setCourses(data)
+    }
+    )
+  }, [])
+  useEffect(() => {
+    getAssesmentDetailsWithAchievedMark(selectedCourse).then(data => {
+      setAssesments(data)
+    }
+    )
+  }
+    , [selectedCourse])
+
+
+    useEffect(() => {
+    getSummaryOfAParticularCourse(selectedCourse).then(data => {
+      setSelectedCourseInfo(data)
+    }
+    )
+  }
+    , [selectedCourse])
+
+useEffect(() => {
+  getparticularCourseDetailsAssesmentAchievedMarkIsNotNull(selectedCourse).then(data => {
+    setCompletedAssesments(data)
+  }
+  )
+} , [selectedCourse])
+
+useEffect(()=>{
+if (selectedCourse){
+    getAssesmentDetailsWithRequiredMark(selectedCourse).then(data => {
+    console.log("eta e required",data)
+    setLeftAssesments(data)
+  })
+}
+} , [selectedCourse])
+
+
+
+
+
 
   return (
     <ScrollArea className='h-full'>
@@ -30,15 +81,19 @@ const page = () => {
               <NextIcon/>
              </div>
              <div className='flex gap-8'>
-             {courses.map((course, index) => (<button key={index} className='bg-gradient-to-r from-[#1a69b9] to-[#17918e] rounded-xl text-white font-bold py-2 px-16'>{course.courseName}</button>))}
+             {courses.map((course, index) => (<button key={index} onClick={()=>{
+              setSelectedCourse(course.courseId)
+             }} className='border rounded p-1 hover:bg-gradient-to-r from-[#1a69b9] to-[#17918e] hover:text-white text-sm'>{course.courseName}</button>))}
              </div>
              <div className='bg-gray-200 mt-4 rounded-lg p-4'>
               <div className='flex justify-between'>
                 <div className='flex gap-2'>
                   <Backpack01Icon/>
-                  <p>Course</p>
+                  <p>{selectedCourseInfo?.courseInfo?.courseName}</p>
+                  
+
                 </div>
-                <Menu01Icon/>
+                <p>Target Score: {selectedCourseInfo?.courseInfo?.targetScore}</p>
 
               </div>
              
@@ -53,23 +108,47 @@ const page = () => {
                 <div className=' flex flex-col items-center col-span-2 md:col-span-1'>
                   <div className='flex gap-2'>
                     <Navigation01Icon/>
-                    <p>Related Tasks</p>
+                    <p>Assesment Done</p>
                   </div>
                   <div className='flex flex-col items-center mt-8'>
                     <Doc01Icon/>
-                    <p>No Open task</p>
-                    <p>we will add taskkk miwi ioqmwq imqwo </p>
+                                <div className='w-full'>
+              <div className='flex justify-between bg-gray-200 p-2 rounded-t-lg'>
+                <p className='font-semibold'>Assessment Name</p>
+                <p className='font-semibold'>Achieved Mark</p>
+                <p className='font-semibold'>Highest Mark</p>
+              </div>
+              {completedAssesments && completedAssesments.map((data, index) => (
+                <div key={index} className='flex justify-between bg-gray-100 p-2 rounded-lg mb-2'>
+                  <p className='font-semibold'>{data.assesmentName}</p>
+                  <p>{data.achievedMark}</p>
+                  <p>{data.highestMark}</p>
+                </div>
+              ))}
+            </div>
                   </div>
                 </div>
                 <div className=' flex flex-col items-center md:border-l border-black col-span-2 md:col-span-1 mt-8 border-t pt-8 md:pt-0 md:mt-0 md:border-t-0'>
                   <div className='flex gap-2'>
                     <Navigation01Icon/>
-                    <p>Upcoming Exams</p>
+                    <p>Upcoming Assesments</p>
                   </div>
                   <div className='flex flex-col items-center mt-8'>
                     <Doc01Icon/>
-                    <p>No Open task</p>
-                    <p>we will add taskkk miwi ioqmwq imqwo </p>
+                                                   <div className='w-full'>
+              <div className='flex justify-between bg-gray-200 p-2 rounded-t-lg'>
+                <p className='font-semibold'>Assessment Name</p>
+                <p className='font-semibold'>Achieved Mark</p>
+                <p className='font-semibold'>Highest Mark</p>
+              </div>
+              {completedAssesments && completedAssesments.map((data, index) => (
+                <div key={index} className='flex justify-between bg-gray-100 p-2 rounded-lg mb-2'>
+                  <p className='font-semibold'>{data.assesmentName}</p>
+                  <p>{data.achievedMark}</p>
+                  <p>{data.highestMark}</p>
+                </div>
+              ))}
+            </div>
                   </div>
                 </div>
                 </div>

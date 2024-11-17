@@ -1,8 +1,30 @@
-import React from 'react';
+import { getAssesmentDetailsWithAchievedMark } from '@/lib/apiJoin';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { useContext } from 'react';
+import assesmentContext from '@/contexts/assesmentContext';
+import { getAssesmentDetailsWithAchievedMarkByAssesmentId } from '@/lib/apiJoin';
 
 
 const AddSectionModal = ({  closeAddSectionModalHandler,currentCourse,handleAddSection }) => {
+const {setAssesmentWithMark}=useContext(assesmentContext)
+  const {assesmentId,setAssesmentId}=useContext(assesmentContext)
+
+
+  useEffect(() => {
+if (assesmentId) {
+      getAssesmentDetailsWithAchievedMarkByAssesmentId(assesmentId)
+    .then((data)=>{
+      setAssesmentWithMark(data[0])
+      setAssesment({...data[0],
+        totalMark:data[0].highestMark
+      })
+    })
+}
+    
+  }, []);
+
+
 const [assesment , setAssesment]=useState({})
 
 
@@ -56,7 +78,7 @@ const [assesment , setAssesment]=useState({})
           <div className=' flex justify-between gap-4 mt-4'>
             <button onClick={closeAddSectionModalHandler} className='border px-4 py-2 rounded-lg w-full'>Cancel</button>
             <button onClick={()=>{
-              handleAddSection(assesment)
+              handleAddSection(assesment,assesmentId)
             }} className='bg-blue-500 text-white px-4 py-2 rounded-lg w-full'>Add</button>
           </div>
         </div>

@@ -86,3 +86,17 @@ export const getAssesmentDetailsWithAchievedMark = async (id) => {
                                                         });
                                                         return response.json();
                                                         }
+
+
+                                                        export const getCoursesWithMarksAndTarget = async () => {
+                                                                    
+                                                                    const userToken = token();
+                                                                    const response = await fetch(`${baseUrl}/joined/getCoursesWithMarksAndTarget`, {
+                                                                        method: 'GET',
+                                                                        headers: {
+                                                                        'Content-Type': 'application/json',
+                                                                        'Authorization': `Bearer ${userToken}`
+                                                                        },
+                                                                    });
+                                                                    return response.json();
+                                                                    }

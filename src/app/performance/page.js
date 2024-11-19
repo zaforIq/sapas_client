@@ -22,40 +22,46 @@ const page = () => {
     )
   }, [])
   useEffect(() => {
+    if (selectedCourse){
     getAssesmentDetailsWithAchievedMark(selectedCourse).then(data => {
       setAssesments(data)
     }
     )
   }
+  }
     , [selectedCourse])
 
 
     useEffect(() => {
+      if (selectedCourse){
     getSummaryOfAParticularCourse(selectedCourse).then(data => {
       setSelectedCourseInfo(data)
     }
     )
   }
+  }
     , [selectedCourse])
 
 useEffect(() => {
+  if (selectedCourse){
   getparticularCourseDetailsAssesmentAchievedMarkIsNotNull(selectedCourse).then(data => {
     setCompletedAssesments(data)
   }
   )
+}
 } , [selectedCourse])
 
 useEffect(()=>{
+
 if (selectedCourse){
     getAssesmentDetailsWithRequiredMark(selectedCourse).then(data => {
-    console.log("eta e required",data)
     setLeftAssesments(data)
   })
 }
 } , [selectedCourse])
 
 
-
+console.log("this is left assesment",leftAssesments.requiredMarksDistribution)
 
 
 
@@ -114,9 +120,9 @@ if (selectedCourse){
                     <Doc01Icon/>
                                 <div className='w-full'>
               <div className='flex justify-between bg-gray-200 p-2 rounded-t-lg'>
-                <p className='font-semibold'>Assessment Name</p>
-                <p className='font-semibold'>Achieved Mark</p>
-                <p className='font-semibold'>Highest Mark</p>
+                <p className='font-semibold text-sm'>Assessment Name</p>
+                <p className='font-semibold text-sm px-8'>Achieved Mark</p>
+                <p className='font-semibold text-sm'>Highest Mark</p>
               </div>
               {completedAssesments && completedAssesments.map((data, index) => (
                 <div key={index} className='flex justify-between bg-gray-100 p-2 rounded-lg mb-2'>
@@ -137,17 +143,23 @@ if (selectedCourse){
                     <Doc01Icon/>
                                                    <div className='w-full'>
               <div className='flex justify-between bg-gray-200 p-2 rounded-t-lg'>
-                <p className='font-semibold'>Assessment Name</p>
-                <p className='font-semibold'>Achieved Mark</p>
-                <p className='font-semibold'>Highest Mark</p>
+                <p className='font-semibold text-sm '>Assessment Name</p>
+                <p className='font-semibold text-sm px-8'>Required Mark</p>
+                <p className='font-semibold text-sm'>Highest Mark</p>
               </div>
-              {completedAssesments && completedAssesments.map((data, index) => (
-                <div key={index} className='flex justify-between bg-gray-100 p-2 rounded-lg mb-2'>
-                  <p className='font-semibold'>{data.assesmentName}</p>
-                  <p>{data.achievedMark}</p>
-                  <p>{data.highestMark}</p>
-                </div>
-              ))}
+          {leftAssesments && leftAssesments.requiredMarksDistribution ? (
+            leftAssesments.requiredMarksDistribution.map((data, index) => (
+              <div key={index} className='flex justify-between bg-gray-100 p-2 rounded-lg mb-2'>
+                <p className='font-semibold'>{data.assesmentName}</p>
+                <p>{data.requiredMark}</p>
+                <p>{data.highestMark}</p>
+              </div>
+            ))
+          ) : (
+            <div className='bg-red-100 mt-2 p-2 rounded-lg'>
+              <p className='text-center text-red-600'>No upcoming assessments available</p>
+            </div>
+          )}
             </div>
                   </div>
                 </div>

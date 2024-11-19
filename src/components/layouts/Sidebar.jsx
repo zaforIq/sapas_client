@@ -7,10 +7,10 @@ import { Home01Icon,StudyDeskIcon, Book01Icon, Analytics01Icon, Logout01Icon, Se
 
 
 const Sidebar = () => {
-  const pathname = usePathname();
+  const pathname = usePathname(); 
 
   const navItems = [
-    { name: 'Dashboard', path: '/dashboard', icon: <Home01Icon /> },
+    { name: 'Dashboard', path: '/', icon: <Home01Icon /> },
     { name: 'Courses', path: '/courses', icon: <Book01Icon /> },
     { name: 'Performance Analysis', path: '/performance', icon: <Analytics01Icon /> },
     { name: 'Study Plan', path: '/study-plan', icon: <Book01Icon /> },

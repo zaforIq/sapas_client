@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { token, student } from '@/lib/localStorageHandler';
 import AddCourse from '@/components/common/AddCourse';
 import Summary from '@/components/common/Summary';
-import { getSummaryOfAllCouresOfAStudent } from '@/lib/apiJoin';
+import { getSummaryOfAllCouresOfAStudent,getCoursesWithMarksAndTarget } from '@/lib/apiJoin';
 
 
 
@@ -18,6 +18,18 @@ export default function Home() {
   const [userData, setUserData] = useState(null);
   const [summaryView, setSummaryView] = useState(false);
   const [summaryData, setSummaryData] = useState(null);
+
+
+
+  useEffect(() => {
+    if (userToken) {
+      getCoursesWithMarksAndTarget().then(data => {
+        setSummaryData(data);
+        console.log(data);
+      });
+    }
+  }
+  , [userToken])
 
   useEffect(() => {
     const fetchedToken = token();
@@ -44,14 +56,14 @@ export default function Home() {
     setIsOpen(false);
   };
 
-  useEffect(() => {
-    if (userToken) {
-      getSummaryOfAllCouresOfAStudent(userData.studentId).then(data => {
+  // useEffect(() => {
+  //   if (userToken) {
+  //     getSummaryOfAllCouresOfAStudent(userData.studentId).then(data => {
         
-        setSummaryData(data);
-      });
-    }
-  }, [userToken, userData]);
+  //       setSummaryData(data);
+  //     });
+  //   }
+  // }, [userToken, userData]);
 
 
 

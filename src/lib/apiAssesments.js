@@ -35,7 +35,7 @@ export const updateAssesment = async (data) => {
 
 export const deleteAssesment = async (id) => {
     const userToken = token();
-    const response = await fetch(`${baseUrl}/course/assesment/${id}`, {
+    const response = await fetch(`${baseUrl}/assesment/${id}`, {
         method: 'DELETE',
         headers: {
         'Content-Type': 'application/json',

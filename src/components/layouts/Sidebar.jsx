@@ -13,7 +13,6 @@ const Sidebar = () => {
     { name: 'Dashboard', path: '/', icon: <Home01Icon /> },
     { name: 'Courses', path: '/courses', icon: <Book01Icon /> },
     { name: 'Performance Analysis', path: '/performance', icon: <Analytics01Icon /> },
-    { name: 'Progress Tracking', path: '/progress', icon: <DiscoverCircleIcon /> },
     {name:'Community Zone',path:'/community',icon:<DiscoverCircleIcon/>},
   ];
 

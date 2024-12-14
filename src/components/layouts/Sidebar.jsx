@@ -45,7 +45,7 @@ const Sidebar = () => {
           </ul>
         </nav>
       </div>
-      <div className='flex  mt-96'>
+      <div className='flex mt-4 ml-2'>
         <Logout01Icon />
         <button onClick={handleLogout} className='ml-2 mt-auto'>Logout</button>
       </div>

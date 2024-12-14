@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata = {
   title: "sapas",
-  description: "Starter Template",
+  description: "Sapas Project",
 };
 
 export default function RootLayout({ children }) {
